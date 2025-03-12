@@ -25,7 +25,7 @@ export const signIn = async (c: Context) => {
             }
             const secret = c.env.JWT_SECRET;
             const token = await sign(payload, secret);
-            return c.json({ json: token });
+            return c.json({ token });
         }
         return c.text("signin success");
     } catch (error) {
@@ -37,4 +37,34 @@ export const signIn = async (c: Context) => {
     }
 };
 
-export const login = async (c: Context) => { };
+export const login = async (c: Context) => {
+    const prisma = getPrisma(c.env.DATABASE_URL);
+    const body = await c.req.json();
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                email: body.email,
+                password: body.password
+            }
+        });
+        if (!user) {
+            return c.text("User not found", 404);
+        }
+        //If User exist then provide the jwt token
+        const payload = {
+            id: user.id,
+            exp: Math.floor(Date.now() / 1000) + 60 * 5 //Token expires in 5 minutes
+        }
+        const secret = c.env.JWT_SECRET;
+        const token = await sign(payload, secret);
+        return c.json({ token });
+    } catch (error) {
+        console.log(error);
+        if (error instanceof Error) {
+            return c.text(error.message, 500);
+        }
+        else {
+            return c.text("An unknown error occurred", 500);
+        }
+    }
+};
