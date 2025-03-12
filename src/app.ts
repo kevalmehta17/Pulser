@@ -6,6 +6,7 @@ import blogRoutes from './routes/blog.route';
 const app = new Hono<{
     Bindings: {
         DATABASE_URL: string;
+        JWT_SECRET: string;
     }
 }>(); // Create a new Hono app
 

@@ -63,8 +63,7 @@ export const login = async (c: Context) => {
         if (error instanceof Error) {
             return c.text(error.message, 500);
         }
-        else {
-            return c.text("An unknown error occurred", 500);
-        }
+        return c.text("An unknown error occurred", 500);
+
     }
 };
