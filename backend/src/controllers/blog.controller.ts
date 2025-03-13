@@ -1,11 +1,16 @@
 import { Context } from "hono";
 import { getPrisma } from "../config/prisma";
+import { blogPostInput, updateBlogPostInput } from "@kevalmehta/pulser-common";
 
 export const createBlog = async (c: Context) => {
 
     const prisma = getPrisma(c.env.DATABASE_URL);
     const userId = c.get('userId');
     const body = await c.req.json();
+    const { success, error } = blogPostInput.safeParse(body);
+    if (!success) {
+        return c.json({ error: error.format() }, 400);
+    }
     try {
         const post = await prisma.post.create({
             data: {
@@ -31,6 +36,10 @@ export const updateBlog = async (c: Context) => {
     const prisma = getPrisma(c.env.DATABASE_URL);
     const userId = c.get('userId');
     const body = await c.req.json();
+    const { success, error } = updateBlogPostInput.safeParse(body);
+    if (!success) {
+        return c.json({ error: error.format() }, 400);
+    }
     try {
         const updatedBlog = await prisma.post.update({
             where: {
