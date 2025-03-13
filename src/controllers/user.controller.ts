@@ -7,7 +7,7 @@ import { decode, sign, verify } from 'hono/jwt'
 //So that we have to call the getPrisma function to get a new Prisma client instance for each request.
 
 
-export const signIn = async (c: Context) => {
+export const signUp = async (c: Context) => {
 
     const prisma = getPrisma(c.env.DATABASE_URL);
     const body = await c.req.json(); //Parse the json body
