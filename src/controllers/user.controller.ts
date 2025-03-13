@@ -21,7 +21,7 @@ export const signUp = async (c: Context) => {
         if (user) {
             const payload = {
                 id: user.id,
-                exp: Math.floor(Date.now() / 1000) + 60 * 5 //Token expires in 5 minutes
+                exp: Math.floor(Date.now() / 1000) + 60 * 30 //Token expires in 30 minutes
             }
             const secret = c.env.JWT_SECRET;
             const token = await sign(payload, secret);
@@ -53,7 +53,7 @@ export const login = async (c: Context) => {
         //If User exist then provide the jwt token
         const payload = {
             id: user.id,
-            exp: Math.floor(Date.now() / 1000) + 60 * 5 //Token expires in 5 minutes
+            exp: Math.floor(Date.now() / 1000) + 60 * 30//Token expires in 30 minutes
         }
         const secret = c.env.JWT_SECRET;
         const token = await sign(payload, secret);

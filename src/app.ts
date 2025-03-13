@@ -7,6 +7,9 @@ const app = new Hono<{
     Bindings: {
         DATABASE_URL: string;
         JWT_SECRET: string;
+    },
+    Variables: {
+        userId: string;
     }
 }>(); // Create a new Hono app
 
