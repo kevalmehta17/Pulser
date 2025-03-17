@@ -1,14 +1,16 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { Signup } from "./pages/Signup";
+import { Login } from "./pages/Login";
+import { Blog } from "./pages/Blog";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>Hello World</div>
+      <Routes>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/'blog/:id'" element={<Blog />}></Route>
+      </Routes>
     </>
   );
 }
