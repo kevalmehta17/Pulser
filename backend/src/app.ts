@@ -1,6 +1,9 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+
 import userRoutes from './routes/user.route';
 import blogRoutes from './routes/blog.route';
+
 
 
 const app = new Hono<{
@@ -12,6 +15,8 @@ const app = new Hono<{
         userId: string;
     }
 }>(); // Create a new Hono app
+// Enable Cors
+app.use('/*', cors())
 
 // Home Route
 app.get("/", (c) => c.text("Hello Hono!"));
