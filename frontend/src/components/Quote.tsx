@@ -1,26 +1,32 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+
 const quotes = [
   {
-    text: `"The customer service I received was exceptional. The support team went above and beyond to address my concerns."`,
-    author: "Jules Winnfield",
-    position: "CEO | Acme Corp",
+    text: `"A platform where words shape the world. Writing has never felt more impactful."`,
+    author: "Harper Lee",
+    position: "Author | To Kill a Mockingbird",
   },
   {
-    text: `"Their product quality exceeded my expectations. I would highly recommend them to anyone in need of top-notch solutions."`,
-    author: "Sarah Connor",
-    position: "CTO | Skynet Tech",
+    text: `"Every writer needs a voice, and Pulser amplifies it beautifully."`,
+    author: "Ernest Hemingway",
+    position: "Journalist & Novelist",
   },
   {
-    text: `"Absolutely love the user experience! The design and functionality are seamless and intuitive."`,
-    author: "Tony Stark",
-    position: "Founder | Stark Industries",
+    text: `"Seamless publishing, engaging readers — Pulser is the future of blogging."`,
+    author: "Seth Godin",
+    position: "Marketing Guru & Blogger",
   },
-  // {
-  //   text: `"Fast, reliable, and outstanding service. They truly care about their customers and deliver beyond expectations."`,
-  //   author: "Bruce Wayne",
-  //   position: "CEO | Wayne Enterprises",
-  // },
+  {
+    text: `"Where ideas meet the world. A must-have for storytellers and thinkers."`,
+    author: "Maya Angelou",
+    position: "Poet & Memoirist",
+  },
+  {
+    text: `"Writing is about connection, and Pulser makes it effortless."`,
+    author: "Joan Didion",
+    position: "Essayist & Journalist",
+  },
 ];
 
 export const Quote = () => {
@@ -29,7 +35,7 @@ export const Quote = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % quotes.length);
-    }, 3000);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
