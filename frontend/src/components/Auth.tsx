@@ -12,6 +12,8 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
     password: "",
     name: "",
   });
+  const [loading, setLoading] = useState(false); // Loading state
+
   // IF user is already logged in, redirect to blogs page
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,6 +23,7 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
   }, [navigate]);
 
   const sendRequest = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/${type === "Signup" ? "signup" : "login"}`,
@@ -31,13 +34,15 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
       console.log(token);
       navigate("/blogs");
     } catch (error) {
-      //Alert the user if there is an error
       alert("Error occurred. Please try again");
       if (error instanceof Error) {
         console.error(error.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div className="h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
       <motion.div
@@ -48,7 +53,7 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
       >
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-            Create an account
+            {type === "Signup" ? "Create an account" : "Welcome back!"}
           </h2>
           <p className="text-slate-500 mt-2 text-sm sm:text-base">
             {type === "Signup"
@@ -94,15 +99,46 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
             }
           />
 
-          {/* Signup Button with Animation */}
+          {/* Signup/Login Button with Loading Indicator */}
           <motion.button
             onClick={sendRequest}
+            disabled={loading}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="w-full bg-black text-white py-3 rounded-lg font-semibold mt-4 text-sm sm:text-base"
+            className={`w-full ${
+              loading ? "bg-gray-500" : "bg-black"
+            } text-white py-3 rounded-lg font-semibold mt-4 text-sm sm:text-base flex items-center justify-center gap-2`}
           >
-            {type === "Signup" ? "Sign Up" : "Login"}
+            {loading ? (
+              <>
+                <svg
+                  className="w-5 h-5 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                {type === "Signup" ? "Signing up..." : "Logging in..."}
+              </>
+            ) : type === "Signup" ? (
+              "Sign Up"
+            ) : (
+              "Login"
+            )}
           </motion.button>
         </div>
       </motion.div>
