@@ -44,7 +44,7 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
+    <div className="h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
           {type === "Signup" ? (
             <LabelledInput
               label="Username"
-              placeholder="Keval Mehta"
+              placeholder="John dee"
               onChange={(e) =>
                 setPostInputs({ ...postInputs, name: e.target.value })
               }
@@ -83,7 +83,7 @@ export const Auth = ({ type }: { type: "Signup" | "Login" }) => {
           {/* Email */}
           <LabelledInput
             label="Email"
-            placeholder="kevalmehta@gmail.com"
+            placeholder="johndee01@gmail.com"
             onChange={(e) =>
               setPostInputs({ ...postInputs, email: e.target.value })
             }

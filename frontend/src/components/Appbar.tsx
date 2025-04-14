@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Avatar } from "../pages/Blogs";
+import { Avatar } from "./BlogCard";
 import { Menu, X } from "lucide-react";
 
 export const Appbar = () => {
