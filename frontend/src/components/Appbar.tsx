@@ -37,13 +37,14 @@ export const Appbar = () => {
   }, [menuOpen]);
 
   return (
+    // parent div for the appbar
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="border-b bg-white/70 backdrop-blur-lg shadow-md flex items-center justify-between px-6 py-4 sm:px-10"
+      className="border-b bg-white/70 backdrop-blur-lg shadow-md flex items-center justify-between  px-6 py-4 sm:px-10"
     >
-      {/* Logo */}
+      {/* Logo - 1st child div */}
       <Link to="/">
         <motion.div
           whileHover={{ scale: 1.05 }}
@@ -55,6 +56,7 @@ export const Appbar = () => {
       </Link>
 
       {/* Navigation Links - Hidden on small screens */}
+      {/* 2nd child div */}
       <div className="hidden text-xl font-serif sm:flex items-center gap-6 text-gray-700 font-medium">
         <motion.a
           whileHover={{ scale: 1.05, color: "#1d4ed8" }}
@@ -68,19 +70,31 @@ export const Appbar = () => {
         >
           Blogs
         </motion.a>
-        <motion.a
+        {/* <motion.a
           whileHover={{ scale: 1.05, color: "#1d4ed8" }}
           className="hover:text-blue-600 transition-all cursor-pointer"
         >
           About
-        </motion.a>
+        </motion.a> */}
       </div>
-
       {/* User Avatar with Dropdown */}
+      {/* 3rd child div */}
       <div className="relative">
-        <button onClick={() => setMenuOpen(!menuOpen)}>
-          <Avatar name="Keval" />
-        </button>
+        <div className="flex items-center gap-2">
+          <Link to={"/publish"}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              className="text-white bg-black  focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2"
+            >
+              Publish
+            </motion.button>
+          </Link>
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            <Avatar name="Keval" />
+          </button>
+        </div>
 
         {menuOpen && (
           <motion.div

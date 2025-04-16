@@ -3,6 +3,8 @@ import { useBlog } from "../hooks";
 // import { Blogs } from "./Blogs";
 import { FullBlog } from "../components/FullBlog";
 
+// This page is used to show the blog details of a single blog connected with the FullBlog Component
+
 export const SingleBlog = () => {
   const { id } = useParams<{ id: string }>();
   const { loading, blog } = useBlog({
