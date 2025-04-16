@@ -17,7 +17,7 @@ export const BlogCard = ({
 }: //   publishDate,
 BlogCardProps) => {
   return (
-    <Link to={`/blog/${id}`} className="w-full">
+    <Link to={`/blog/${id}`} className="w-full flex item-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

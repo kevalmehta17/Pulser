@@ -1,12 +1,14 @@
 // Cloudflare Workers are stateless, so we must create a new Prisma client 
 // for each request to avoid connection pooling issues.
-//So that we have to call the getPrisma function to get a new Prisma client instance for each request.
+// So we have to call getPrisma function to get a new Prisma client instance for each request.
 
 import { Context } from "hono";
 import { getPrisma } from "../config/prisma";
 import { sign } from "hono/jwt";
 import bcrypt from "bcryptjs";
 import { loginInput, signupInput } from "@kevalmehta/pulser-common";
+
+const TOKEN_EXPIRY_IN_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
 export const signUp = async (c: Context) => {
     const prisma = getPrisma(c.env.DATABASE_URL);
@@ -37,7 +39,7 @@ export const signUp = async (c: Context) => {
 
         const payload = {
             id: user.id,
-            exp: Math.floor(Date.now() / 1000) + 60 * 30, // Token expires in 30 min
+            exp: Math.floor(Date.now() / 1000) + TOKEN_EXPIRY_IN_SECONDS
         };
 
         const token = await sign(payload, c.env.JWT_SECRET);
@@ -73,7 +75,7 @@ export const login = async (c: Context) => {
 
         const payload = {
             id: user.id,
-            exp: Math.floor(Date.now() / 1000) + 60 * 30,
+            exp: Math.floor(Date.now() / 1000) + TOKEN_EXPIRY_IN_SECONDS
         };
 
         const token = await sign(payload, c.env.JWT_SECRET);

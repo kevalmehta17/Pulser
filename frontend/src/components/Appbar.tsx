@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Avatar } from "./BlogCard";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Appbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,13 +44,15 @@ export const Appbar = () => {
       className="border-b bg-white/70 backdrop-blur-lg shadow-md flex items-center justify-between px-6 py-4 sm:px-10"
     >
       {/* Logo */}
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 300 }}
-        className="text-2xl font-bold text-gray-900 cursor-pointer"
-      >
-        Pulser
-      </motion.div>
+      <Link to="/">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="text-2xl font-bold text-gray-900 cursor-pointer"
+        >
+          Pulser
+        </motion.div>
+      </Link>
 
       {/* Navigation Links - Hidden on small screens */}
       <div className="hidden text-xl font-serif sm:flex items-center gap-6 text-gray-700 font-medium">
