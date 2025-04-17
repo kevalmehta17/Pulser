@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={token ? <Navigate to="/blogs" /> : <Navigate to="/signup" />}
+          element={token ? <Navigate to="/home" /> : <Navigate to="/signup" />}
         ></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
