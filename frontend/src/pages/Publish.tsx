@@ -1,21 +1,49 @@
+import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "./config";
 
 export const Publish = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
   const navigate = useNavigate();
 
+  //   This fun is used to show the confirmation modal when the use clicked on the publish button for the confirmation
   const handlePublishClick = () => {
     setShowConfirm(true);
   };
 
-  const handleConfirm = () => {
+  // This function is used to push the title and content to the backend
+  const handleConfirm = async () => {
+    if (isPublishing) return;
+    setIsPublishing(true);
     setShowConfirm(false);
-    // TODO: Add actual publish logic here
-    console.log("Post published!");
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/blog`,
+        {
+          title,
+          content,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token") || "",
+          },
+        }
+      );
+      console.log(response.data);
+      navigate(`/blog/${response.data.id}`);
+    } catch (error) {
+      alert("Error publishing the post. Please try again.☺️");
+      console.error(error);
+    } finally {
+      setIsPublishing(false);
+    }
   };
-
+  // Navigate to the previous page for dynamic routing
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -44,6 +72,7 @@ export const Publish = () => {
           <textarea
             placeholder="Give your article a compelling title..."
             rows={2}
+            onChange={(e) => setTitle(e.target.value)}
             className="w-full p-4 rounded-lg bg-neutral-50 border border-black/20 text-black placeholder-black/40 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all resize-none"
           />
         </label>
@@ -54,6 +83,7 @@ export const Publish = () => {
           </span>
           <textarea
             placeholder="Start writing your amazing content here..."
+            onChange={(e) => setContent(e.target.value)}
             rows={10}
             className="w-full p-4 rounded-lg bg-neutral-50 border border-black/20 text-black placeholder-black/40 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all resize-y"
           />
@@ -69,11 +99,16 @@ export const Publish = () => {
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.97 }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: isPublishing ? 1 : 1.05 }}
             onClick={handlePublishClick}
-            className="w-full mt-4 px-6 py-3 bg-black text-white font-semibold rounded-lg shadow hover:shadow-lg transition-all"
+            disabled={isPublishing}
+            className={`w-full mt-4 px-6 py-3 text-white font-semibold rounded-lg shadow hover:shadow-lg transition-all ${
+              isPublishing
+                ? "bg-slate-500 cursor-not-allowed opacity-70"
+                : "bg-black hover:bg-gray-800"
+            }`}
           >
-            🚀 Publish Now
+            {isPublishing ? "Publishing..." : "🚀 Publish Now"}
           </motion.button>
         </div>
       </motion.div>

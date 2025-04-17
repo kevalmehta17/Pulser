@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Avatar } from "./BlogCard";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Appbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   // build the close if Esc or Mouse down pressed
   useEffect(() => {
@@ -36,6 +37,14 @@ export const Appbar = () => {
     // return () => window.removeEventListener("keydown", closeMenu);
   }, [menuOpen]);
 
+  // Logout Function
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  const MotionLink = motion(Link);
+
   return (
     // parent div for the appbar
     <motion.div
@@ -58,12 +67,13 @@ export const Appbar = () => {
       {/* Navigation Links - Hidden on small screens */}
       {/* 2nd child div */}
       <div className="hidden text-xl font-serif sm:flex items-center gap-6 text-gray-700 font-medium">
-        <motion.a
+        <MotionLink
+          to="/home"
           whileHover={{ scale: 1.05, color: "#1d4ed8" }}
           className="hover:text-blue-600 transition-all cursor-pointer"
         >
           Home
-        </motion.a>
+        </MotionLink>
         <motion.a
           whileHover={{ scale: 1.05, color: "#1d4ed8" }}
           className="hover:text-blue-600 transition-all cursor-pointer"
@@ -103,12 +113,12 @@ export const Appbar = () => {
             exit={{ opacity: 0, y: -10 }}
             className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg py-2 text-sm font-medium"
           >
-            <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-              Profile
-            </a>
-            <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+            <button
+              onClick={handleLogOut}
+              className="block px-4 py-2 hover:bg-gray-200"
+            >
               Logout
-            </a>
+            </button>
           </motion.div>
         )}
       </div>

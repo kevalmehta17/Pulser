@@ -21,7 +21,7 @@ export const Blogs = () => {
             id={blog.id}
             title={blog.title}
             content={blog.content}
-            authorName={blog.authorname?.name || "Anonymous"}
+            authorName={blog.author?.name || "Anonymous"}
             // publishDate={blog.published}
           />
         ))}

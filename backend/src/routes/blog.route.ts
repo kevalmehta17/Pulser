@@ -8,7 +8,7 @@ blogRoutes.use(protectRoute);
 
 blogRoutes.get("/bulk", getAllBlog);
 blogRoutes.get("/:id", getBlogById);
-blogRoutes.post("/", createBlog);
+blogRoutes.post("/blog", createBlog);
 blogRoutes.put("/update", updateBlog);
 
 export default blogRoutes;

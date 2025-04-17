@@ -12,10 +12,17 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
           <div className=" col-span-8 ">
             <div className="text-4xl font-bold text-black">{blog.title}</div>
             <div className="text-sm text-gray-500 mt-2">
-              Post on 5 January 2025
-            </div>
+              Posted on{" "}
+              {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </div>{" "}
             <div className="text-sm text-gray-500 mt-2">{blog.author.name}</div>
-            <div className="text-sm text-gray-500 mt-2">{blog.content}</div>
+            <div className="text-xl font-sans text-gray-500 mt-2">
+              {blog.content}
+            </div>
           </div>
           <div className=" col-span-4">
             <div className="text-gray-600 text-lg">Author</div>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns"; // for time ago formatting
 
 interface BlogCardProps {
   id: string;
@@ -14,8 +15,8 @@ export const BlogCard = ({
   authorName,
   title,
   content,
-}: //   publishDate,
-BlogCardProps) => {
+  publishDate,
+}: BlogCardProps) => {
   return (
     <Link to={`/blog/${id}`} className="w-full flex item-center justify-center">
       <motion.div
@@ -29,7 +30,12 @@ BlogCardProps) => {
             <Avatar name={authorName} />
             <span className="font-semibold text-gray-800">{authorName}</span>
             <span className="text-gray-400">•</span>
-            {/* You can show the publish date here if needed */}
+            {/* Render publish date here if provided */}
+            {publishDate && (
+              <span className="text-gray-400">
+                {formatDistanceToNow(new Date(publishDate))} ago
+              </span>
+            )}
           </header>
           <h2 className="text-xl font-bold text-gray-900 hover:text-blue-500 transition-all">
             {title}

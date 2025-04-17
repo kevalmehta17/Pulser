@@ -2,10 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../pages/config";
 
+// This file is connected with FullBlog and SingleBlog component
+
 export interface Blog {
     content: string;
     title: string;
     id: string;
+    createdAt: string | Date;
     author: {
         name: string;
     };
