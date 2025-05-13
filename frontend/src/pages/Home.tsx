@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-slate-100 to-slate-200 text-black flex flex-col justify-center items-center px-6">
       <motion.div
@@ -23,7 +25,7 @@ export const Home = () => {
           whileTap={{ scale: 0.97 }}
           whileHover={{ scale: 1.05 }}
           className="px-8 py-3 bg-black text-white font-semibold rounded-xl shadow hover:shadow-lg transition-all"
-          onClick={() => (window.location.href = "/blogs")} // or use `navigate('/publish')` if using `react-router`
+          onClick={() => navigate("/blogs")} // or use `navigate('/publish')` if using `react-router`
         >
           ✍️ Start Writing
         </motion.button>
